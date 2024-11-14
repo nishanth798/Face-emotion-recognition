@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Human Emotion Detection</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+      }
+      h1 {
+        margin-bottom: 20px;
+      }
+      .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .button-container button {
+        margin: 0 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+      .button-container button:hover {
+        background-color: #0069d9;
+      }
+      .image-container {
+        margin-top: 30px;
+      }
+      #selected-image {
+        max-width: 500px;
+        max-height: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Human Emotion Detection</h1>
+    <p>Upload an image <strong>OR</strong> access a real-time video feed to detect emotions using CNN and RNN.</p>
+    <form method="POST" action="/submit" enctype="multipart/form-data" id="upload-form">
+      <input type="file" name="image" id="image-input" style="display: none" accept="image/*" />
+      <div class="button-container">
+        <button type="button" onclick="uploadImage()">Upload Image</button>
+        <button type="submit">Submit</button>
+        <span style="padding: 0 10px;">OR</span>
+        <button onclick="accessVideo()">Real Video</button>
+      </div>
+    </form>
+    <div class="image-container">
+      <img id="selected-image" style="display: none" />
+    </div>
+    <script>
+      function uploadImage() {
+        const fileInput = document.getElementById('image-input');
+        fileInput.onchange = function (event) {
+          const file = event.target.files[0];
+          if (file) {
+            const img = document.getElementById('selected-image');
+            img.src = URL.createObjectURL(file);
+            img.style.display = 'block';
+          }
+        };
+        fileInput.click();
+      }
+
+      // Submit the form
+      document.getElementById('upload-form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent default form submission
+        this.submit(); // Submit the form
+      });
+    </script>
+  </body>
+</html>
